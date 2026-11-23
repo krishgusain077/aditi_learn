@@ -1,0 +1,16 @@
+{
+  "expo": {
+    "name": "Aditi Learning",
+    "slug": "aditi-learning-appearance",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "android": {
+      "package": "com.aditilearning.appearance"
+    },
+    "ios": {
+      "bundleIdentifier": "com.aditilearning.appearance"
+    }
+  }
+}

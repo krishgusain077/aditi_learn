@@ -4,6 +4,28 @@ React Native + Expo TypeScript application for the Appearance Settings assignmen
 
 ## Run locally
 
+```bash
+npm install
+npx expo install --check
+npm start
+```
+
+## Run everything (Windows batch)
+
+You can use the provided `run.bat` script to execute the full workflow in one step. It will:
+- Install npm dependencies
+- Run the TypeScript type‑check
+- Execute the contract smoke tests
+- Run the full Jest test suite
+- Start the Expo development server
+
+```bat
+run.bat
+```
+
+The script stops on the first error and prints a helpful message.
+
+
 Requires Node.js 20.19+ (Node 22 recommended) and an Expo-capable iOS/Android device or simulator.
 
 ```bash

@@ -1,10 +1,10 @@
 JOB ID: 7aZkrkoV1xWu5oTYttXR
 Freelancer: Krish Gusain
-GitHub repository: <PASTE_LINK_HERE>
+GitHub repository: https://github.com/krishgusain077/aditi_learn.git
 Branch: feature/appearance-theme-toggle
-Final commit: b49036a423a0de6a27bccf0916438c8ec2fefa91 (or latest after any human edits)
-Screen recording: SCREEN_RECORDING.mp4 (in this Drive folder) / <PASTE_LINK_IF_ANY>
+Final commit: <run: git rev-parse HEAD>
+Screen recording: SCREEN_RECORDING.mp4 (in this Drive folder)
 Implementation summary: IMPLEMENTATION_SUMMARY.md
-Tests run: typecheck PASS, contract tests PASS, jest feature tests 13/13 PASS
-Platforms manually tested: <HUMAN_TO_FILL>
-Limitations: <HUMAN_TO_FILL / "None known">
+Tests run: typecheck PASS, contract tests 2/2 PASS, jest feature tests 13/13 PASS
+Platforms manually tested: Android phone (Expo Go, SDK 54). Not tested on iOS.
+Limitations: Not tested on iOS. The app renders nothing for a brief moment at startup while the saved theme loads, to avoid a flash of the wrong theme.

@@ -1,0 +1,10 @@
+JOB ID: 7aZkrkoV1xWu5oTYttXR
+Freelancer: Krish Gusain
+GitHub repository: <PASTE_LINK_HERE>
+Branch: feature/appearance-theme-toggle
+Final commit: b49036a423a0de6a27bccf0916438c8ec2fefa91 (or latest after any human edits)
+Screen recording: SCREEN_RECORDING.mp4 (in this Drive folder) / <PASTE_LINK_IF_ANY>
+Implementation summary: IMPLEMENTATION_SUMMARY.md
+Tests run: typecheck PASS, contract tests PASS, jest feature tests 13/13 PASS
+Platforms manually tested: <HUMAN_TO_FILL>
+Limitations: <HUMAN_TO_FILL / "None known">

@@ -1,6 +1,6 @@
 # Aditi Learning — Appearance Settings feature
 
-React Native + Expo TypeScript starter for the Appearance Settings assignment.
+React Native + Expo TypeScript application for the Appearance Settings assignment.
 
 ## Run locally
 
@@ -14,26 +14,33 @@ npm start
 
 Open in a compatible Expo Go/dev build or simulator. Use the **Appearance settings** button on the home screen.
 
+## How to test
+
+```bash
+npm run typecheck          # TypeScript check (tsc --noEmit)
+npm run test:contracts     # Contract smoke test (node --test)
+npm test                   # Jest feature acceptance test suite
+```
+
 ## Existing architecture
 
-- `src/theme/ThemeProvider.tsx`: **existing global provider**. Extend this provider with safe AsyncStorage hydration and persistence; do not create another provider.
-- `src/theme/tokens.ts`: approved light/dark theme tokens. Use `colors` from `useAppTheme` and common `spacing`, `radii`, `typeScale` constants. No literal color hexes in screen styles.
-- `src/screens/AppearanceSettings.tsx`: feature screen to implement. Reference PNGs are in `../DESIGN_REFERENCES/`.
-- `src/screens/HomeScreen.tsx`: existing home screen to verify global live updates.
-- `App.tsx`: simple existing navigation without adding new navigation dependencies.
-- `tests/`: lightweight contract smoke checks (`npm run test:contracts`).
+- `src/theme/ThemeProvider.tsx`: **existing global provider**. Extended with safe AsyncStorage hydration and persistence without creating any duplicate context.
+- `src/theme/tokens.ts`: approved light/dark theme tokens. Single source of truth for color, spacing, radius, and typography constants.
+- `src/theme/themeStorage.ts`: dedicated storage isolation module for reading and writing persisted theme preference.
+- `src/components/SurfaceCard.tsx`: reusable rounded container styled dynamically with current theme tokens.
+- `src/components/SettingToggleRow.tsx`: accessible toggle row component encapsulating label, description, and native switch.
+- `src/screens/AppearanceSettings.tsx`: feature settings screen with header, cards, live switch, and footer.
+- `src/screens/HomeScreen.tsx`: home screen reflecting global live theme mode updates.
+- `App.tsx`: simple state-based screen switcher without adding external navigation dependencies.
+- `tests/`: contract checks (`tokens.test.cjs`) and comprehensive feature test suite (`appearance.test.tsx`).
 
-## Work to complete
+## Appearance persistence & failure behavior
 
-Build the accessible theme Switch, connect to existing `useAppTheme` state, extend provider to asynchronously read/write AsyncStorage, handle storage failures without crashing, and verify restart persistence. Write and run unit tests for storage hydration/toggle behavior with a mocked storage layer. Do not use a second theme context or hardcode palette values.
-
-## Validation expectations
-
-1. `npm run typecheck` succeeds.
-2. `npm run test:contracts` succeeds and add/run feature tests for toggle, hydration, storage rejection and restart persistence.
-3. On a device/emulator, toggling updates Home and Appearance screens immediately, and the value survives a force-close/relaunch.
-4. Record a short genuine screen capture showing the toggle and persistence, and document tests actually performed.
-
-## Notes
-
-AsyncStorage is asynchronous; use the existing provider's lifecycle and avoid race conditions and a visible wrong-theme flash. The `userInterfaceStyle` field in app.json is an app-level default, not the feature's persistent theme state.
+- **Storage key:** `aditi:appearance:mode:v1`
+- **Supported values:** `'light'` | `'dark'` (default: `'light'`)
+- **Hydration:** Happens once on application startup via `readStoredMode()`.
+- **No wrong-theme flash:** Until hydration finishes, `ThemeProvider` renders `null` instead of children, preventing any flash of an incorrect theme.
+- **Invalid values:** Stored garbage or unexpected values (e.g., `'banana'`, `''`, `'DARK'`) safely fall back to `'light'`.
+- **Read failure behavior:** If AsyncStorage `getItem` fails or rejects, `readStoredMode()` catches the error, falls back to `'light'`, sets `isPersisted = false`, and the app operates smoothly in-memory without crashing.
+- **Write failure behavior:** If AsyncStorage `setItem` fails or rejects, `writeStoredMode()` catches the error and returns `false`. `isPersisted` is updated to `false`, and the helper text `"Your choice is saved on this device."` is hidden. The theme continues to function in-memory for the active session.
+- **Race condition safety:** Rapid toggling is protected by a sequence counter (`writeSeq`). Only the latest asynchronous write updates `isPersisted`, ensuring stale promises never overwrite the latest state.
